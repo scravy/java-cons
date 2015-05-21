@@ -21,7 +21,7 @@ import de.scravy.pair.Pair;
  * @since 1.0.0
  *
  * @param <E>
- *          Element type.
+ *          The Element type.
  */
 @Value
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -38,6 +38,8 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E> {
    * @since 1.0.0
    * @param value
    *          The one element.
+   * @param <E>
+   *          The Element type.
    * @return A list with one element.
    */
   @SuppressWarnings("unchecked")
@@ -49,6 +51,8 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E> {
    * The empty list.
    *
    * @since 1.0.0
+   * @param <E>
+   *          The Element type.
    * @return An empty list.
    */
   @SuppressWarnings("unchecked")
@@ -67,6 +71,8 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E> {
    *          The head for the new list.
    * @param tail
    *          The tail for the new list (the list to prepend to).
+   * @param <E>
+   *          The Element type.
    * @return The new list which consists of head and tail.
    */
   public static <E> Cons<E> cons(final E head, final Cons<E> tail) {
@@ -94,6 +100,8 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E> {
    * @since 1.0.0
    * @param array
    *          The array.
+   * @param <E>
+   *          The Element type.
    * @return The list created from that array.
    */
   @SafeVarargs
@@ -150,6 +158,8 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E> {
    * Add the contents of this list to the given collection.
    *
    * @since 1.0.0
+   * @param <C>
+   *          The collection type.
    * @param collection
    *          The collection to add things to.
    * @return The (mutated) collection is returned.
@@ -172,7 +182,7 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E> {
    * @return The element at the given index.
    * @throws NoSuchElementException
    *           Thrown if the list does not contain this many elements (iff
-   *           <code>getLength() <= index</code>).
+   *           <code>getLength() ≥ index</code>).
    */
   public E get(final int ix) {
     Cons<E> current = this;
