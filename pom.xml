@@ -5,12 +5,15 @@
 
 	<groupId>de.scravy</groupId>
 	<artifactId>cons</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>Cons</name>
 	<url>https://github.com/scravy/java-cons</url>
-	<description>A tiny library that offers the Either type in Java.</description>
+    <description>
+        A tiny library that offers persistent/immutable,
+        singly-linked lists.
+    </description>
 
 	<developers>
 		<developer>
