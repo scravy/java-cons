@@ -39,6 +39,12 @@ public class ConsTest {
     Assert.assertEquals(
         Cons.fromArray(1, 2, 3, 4, 5),
         Cons.fromArray(1, 2, 3, 4, 5));
+    Assert.assertNotEquals(
+        Cons.fromArray(1, 2, 3, 3, 5),
+        Cons.fromArray(1, 2, 3, 4, 5));
+    Assert.assertNotEquals(
+        Cons.fromArray(1, 2, 3, 3, 5, 6),
+        Cons.fromArray(1, 2, 3, 4, 5));
   }
 
   @Test
@@ -50,5 +56,23 @@ public class ConsTest {
     Assert.assertEquals(
         Cons.fromArray(1, 2, 3, 4, 5).hashCode(),
         Cons.fromArray(1, 2, 3, 4, 5).hashCode());
+  }
+
+  @Test
+  public void take() {
+    final Cons<Integer> cons = Cons.fromArray(1, 2, 3, 4, 5);
+    Assert.assertEquals(Cons.fromArray(1, 2, 3), cons.take(3));
+  }
+
+  @Test
+  public void drop() {
+    final Cons<Integer> cons = Cons.fromArray(1, 2, 3, 4, 5);
+    Assert.assertEquals(Cons.fromArray(4, 5), cons.drop(3));
+  }
+
+  @Test
+  public void reverse() {
+    final Cons<Integer> cons = Cons.fromArray(1, 2, 3);
+    Assert.assertEquals(Cons.fromArray(3, 2, 1), cons.reverse());
   }
 }

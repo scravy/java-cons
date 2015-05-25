@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 
 import lombok.AccessLevel;
@@ -23,6 +24,9 @@ import de.scravy.pair.Pairs;
  *
  * No method will mutate the list. The list is immutable, unmodifieable,
  * you-name-it.
+ *
+ * Implements the {@link List} interface since v1.1.0. Every method which would
+ * muate the list will throw an {@link UnsupportedOperationException}.
  *
  * @author Julian Fleischer
  * @since 1.0.0
@@ -400,10 +404,20 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E>, List<E> {
     return result;
   }
 
+  /**
+   * @since 1.1.0
+   * @param n
+   * @return
+   */
   public Cons<E> drop(final int n) {
     return subList(n);
   }
 
+  /**
+   * @since 1.1.0
+   * @param ix
+   * @return
+   */
   public Cons<E> subList(final int ix) {
     Cons<E> current = this;
     int i = 0;
@@ -414,14 +428,19 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E>, List<E> {
     return current;
   }
 
+  /**
+   *
+   * @since 1.1.0
+   * @return A new list in reversed order.
+   */
   public Cons<E> reverse() {
-    final Deque<E> stack = new LinkedList<>();
+    final Queue<E> stack = new LinkedList<>();
     for (final E e : this) {
-      stack.push(e);
+      stack.add(e);
     }
     Cons<E> current = Cons.empty();
     while (!stack.isEmpty()) {
-      current = current.cons(stack.pop());
+      current = current.cons(stack.poll());
     }
     return current;
   }
@@ -441,22 +460,18 @@ public class Cons<E> implements Pair<E, Cons<E>>, Iterable<E>, List<E> {
     if (this == other) {
       return true;
     }
-    if (other instanceof Pair) {
+    if (other instanceof Cons) {
+      final Iterator<?> it1 = iterator();
+      final Iterator<?> it2 = ((Cons<?>) other).iterator();
+      while (it1.hasNext() && it2.hasNext()) {
+        if (!Objects.equals(it1.next(), it2.next())) {
+          return false;
+        }
+      }
+      return !it1.hasNext() && !it2.hasNext();
+    } else if (other instanceof Pair) {
       return Pairs.equals(this, other);
     }
-    if (other == null) {
-      return false;
-    }
-    if (getClass() != other.getClass()) {
-      return false;
-    }
-    final Iterator<?> it1 = iterator();
-    final Iterator<?> it2 = ((Cons<?>) other).iterator();
-    while (it1.hasNext() && it2.hasNext()) {
-      if (!Objects.equals(it1.next(), it2.next())) {
-        return false;
-      }
-    }
-    return !it1.hasNext() && !it2.hasNext();
+    return false;
   }
 }
